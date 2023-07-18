@@ -12,9 +12,11 @@ import java.util.Vector;
  */
 public class quickSort {
     public static void main(String[] args) {
-        int arr[] = {5, 3, 7, 2, 9, 8, 1, 4};
+        int arr[] = {5, 3, 7, 2, 9, 1, 8, 4};
         partition(arr, 0, arr.length - 1);
-//        partition_lomuto(arr, 0, arr.length - 1);
+//        partition_lomuto(arr, 0, arr.length - 1)
+//        partitionMiddle(arr , 0, arr.length - 1);
+        System.out.println(Arrays.toString(arr));
     }
 
 
@@ -49,25 +51,26 @@ public class quickSort {
      * 然后分别从左边界和右边界开始
      * */
     public static void partition(int[] arr, int l, int r) {
-        if (l >= r) return;
-        int pv = arr[l];        //如果基准定为左边界，则交换时先从右边找
+        if (l >= r ) return;
         int i = l, j = r;
-        while (i < j) {
-            //从右找小的，如果比基准大，循环继续
-            while (i < j && arr[j] > pv) {
-                j--;
-            }
-            //因为基准点是左边，所以一开始 arr[i] = pv的
-            //为了循环能进行 所以从左开始 如果小于等于基准点，循环继续
-            while (i < j && arr[i] <= pv) {
-                i++;
-            }
-            swap(arr, i, j);
-        }
-        swap(arr, l, j);
-        System.out.println(Arrays.toString(arr) + "基准点下标" + j);
-        partition(arr, l, j - 1);
-        partition(arr, j + 1, r);
+        int pV = arr[i];    //选左边则从右边开始找
+        while( arr[j] > pV && j > i) j--;
+        while (arr[i] <= pV && i < j) i++;
+        swap(arr,i,j);
+        partition(arr, l, i - 1);
+        partition(arr, i + 1, r);
+    }
+
+    public static void partitionMiddle(int[] arr, int l, int r){
+        if (l > r) return;
+        int i = l, j = r, m;
+        m = (i + j) >>> 1;
+        while (i <= j && arr[i] < arr[m])  i++;
+        while (i <= j && arr[j] > arr[m])  j--;
+        swap(arr, i, j);
+        partitionMiddle(arr, l, j - 1  );
+        partitionMiddle(arr,   j+ 1, r);
+
     }
 
     public static void swap(int[] arr, int i, int j) {
