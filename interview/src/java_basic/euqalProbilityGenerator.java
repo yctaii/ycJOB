@@ -64,6 +64,30 @@ public class euqalProbilityGenerator {
     }
 
 
+    /**
+     * 给定一个函数 只返回 0 1  但返回概率不等 且不知道
+     * 设计出等概率返回 0 1的函数
+     *
+     */
+
+    public int ff(){
+        return Math.random() < 0.76 ? 0 : 1;
+    }
+
+    /**
+     * 思路： 随机两次   返回 0 0 概率 p ^ 2和 返回 1 1 都重新获取 概率 (1-p)^2 均分给剩下结果
+     * 得到 0 1 返回 1 得到 1 0 返回 0   概率都是p*(1-p)
+     * 就已经得到 0 1等概率构造器  返回 0 和 返回 1 概率相投
+     */
+
+    public int gg(){
+        int ans = 0;
+        do {
+            ans = ff();
+        }while(ans == ff());  //只有第一次和第二次取到的值不一样才返回
+        return ans;
+    }
+
     @Test
     public void testRun() {
         int testTime = 10000000;
