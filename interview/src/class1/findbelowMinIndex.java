@@ -1,4 +1,4 @@
-package java_basic;
+package class1;
 
 
 import org.junit.Test;
@@ -13,18 +13,19 @@ public class findbelowMinIndex {
         //当中间的值大于等于 target 说明右边不会有等于target的值了直接 让 r = mid - 1
         //当中间小于 target  从右边开始找
 
-        int L = 0, R = arr.length - 1;
-        int ans = -1, mid;
-        while (L <= R) {
-            mid = (L + R) >>> 1;
-            if (arr[mid] >= target) {
-                ans = mid;
-                R = mid - 1;
-            } else {
-                L = mid + 1;
+        int l = 0, r = arr.length;
+        int m = 0;
+        int ans = 0;
+        while(l <= r){
+            m = l + r >> 1;
+            if(arr[m] >= target){
+                ans = m;
+                r = m - 1;
+            }else{
+                l = m + 1;
             }
         }
-        return ans;
+        return m;
     }
 
 
@@ -39,8 +40,7 @@ public class findbelowMinIndex {
         while (l <= r) {
             m = (l + r) >>> 1;
             if (arr[m] >= target) {
-                if (arr[m] == target)
-                    ans[0] = m;
+                ans[0] = m;
                 r = m - 1;
             } else {
                 l = m + 1;
@@ -52,8 +52,7 @@ public class findbelowMinIndex {
         while (l <= r) {
             m = (l + r) >>> 1;
             if (arr[m] <= target) {
-                if (arr[m] == target)
-                    ans[1] = m;
+                ans[1] = m;
                 l = m + 1;
             } else {
                 r = m - 1;
@@ -67,7 +66,7 @@ public class findbelowMinIndex {
     public void testRun() {
         int arr[] = {1, 2, 3, 4, 4, 4, 5, 7};
 
-        System.out.println("目标出现最左位置" + findMinindex(arr, 6));
+        System.out.println("目标出现最左位置" + findMinindex(arr, 4));
         int[] targetPos = findTargetPos(arr, 4);
         System.out.println("目标所在区间[" + targetPos[0] + "," + targetPos[1] + "]");
     }

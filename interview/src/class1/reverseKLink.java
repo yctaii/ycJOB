@@ -1,4 +1,4 @@
-package java_basic;
+package class1;
 
 import org.junit.Test;
 
@@ -43,8 +43,8 @@ public class reverseKLink {
         if(end == null) return head; //不足k个不用反转
 
         //因为反转后，头指针应该指向当前的end，在reverse之前先记录
-        head = end;
         reverse(start,end);
+        head = end;
         ListNode lastEnd = start;   //此时的start已经是反转链表组的尾部
         while(lastEnd.next != null){
             start = lastEnd.next;
@@ -94,7 +94,7 @@ public class reverseKLink {
         ListNode next = a.next.next;
         next.next = new ListNode(4);
 
-        ListNode cur = reverseKGroup(a, 2);
+        ListNode cur = reverseKGroup(a, 3);
 
         while (cur != null) {
             System.out.print(cur.toString());

@@ -13,9 +13,9 @@ import java.util.Vector;
 public class quickSort {
     public static void main(String[] args) {
         int arr[] = {5, 3, 7, 2, 9, 1, 8, 4};
-        partition(arr, 0, arr.length - 1);
+//        partition(arr, 0, arr.length - 1);
 //        partition_lomuto(arr, 0, arr.length - 1)
-//        partitionMiddle(arr , 0, arr.length - 1);
+        partitionMiddle(arr , 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -23,7 +23,7 @@ public class quickSort {
     /**
      * 单边循环，i作为要交换的下标
      * j作为比较的下标
-     * */
+     */
     public static void partition_lomuto(int[] arr, int l, int r) {
         if (l > r) return;
         int pv = arr[r];        //基准总是定为右边界
@@ -51,25 +51,28 @@ public class quickSort {
      * 然后分别从左边界和右边界开始
      * */
     public static void partition(int[] arr, int l, int r) {
-        if (l >= r ) return;
+        if (l >= r) return;
         int i = l, j = r;
         int pV = arr[i];    //选左边则从右边开始找
-        while( arr[j] > pV && j > i) j--;
+        while (arr[j] > pV && j > i) j--;
         while (arr[i] <= pV && i < j) i++;
-        swap(arr,i,j);
+        swap(arr, i, j);
         partition(arr, l, i - 1);
         partition(arr, i + 1, r);
     }
 
-    public static void partitionMiddle(int[] arr, int l, int r){
-        if (l > r) return;
-        int i = l, j = r, m;
-        m = (i + j) >>> 1;
-        while (i <= j && arr[i] < arr[m])  i++;
-        while (i <= j && arr[j] > arr[m])  j--;
-        swap(arr, i, j);
-        partitionMiddle(arr, l, j - 1  );
-        partitionMiddle(arr,   j+ 1, r);
+    public static void partitionMiddle(int[] arr, int l, int r) {
+        if (l >= r) return;
+        int i = l - 1, j = r + 1;
+        int tmp = arr[l + r >> 1];
+        while (i < j) {
+            do i++; while(arr[i] < tmp);
+            do j--; while(arr[j] > tmp);
+            if (i < j)
+                swap(arr, i, j);
+        }
+        partitionMiddle(arr, l, j);
+        partitionMiddle(arr, j + 1, r);
 
     }
 
