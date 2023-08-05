@@ -6,6 +6,7 @@ public class bubbleSort {
     public static void main(String[] args) {
         int arr[] = { 1, 9, 6, 3, 5, 4, 7, 8, 2 };
         bubble(arr);
+        System.out.println(Arrays.toString(arr));
     }
 
     public static void bubble(int[] arr) {

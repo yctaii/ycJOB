@@ -15,7 +15,7 @@ public class quickSort {
         int arr[] = {5, 3, 7, 2, 9, 1, 8, 4};
 //        partition(arr, 0, arr.length - 1);
 //        partition_lomuto(arr, 0, arr.length - 1)
-        partitionMiddle(arr , 0, arr.length - 1);
+        partitionMiddle(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -64,14 +64,14 @@ public class quickSort {
     public static void partitionMiddle(int[] arr, int l, int r) {
         if (l >= r) return;
         int i = l - 1, j = r + 1;
-        int tmp = arr[l + r >> 1];
-        while (i < j) {
-            do i++; while(arr[i] < tmp);
-            do j--; while(arr[j] > tmp);
-            if (i < j)
-                swap(arr, i, j);
+        int m = l + r >> 1;
+        int x = arr[m];
+        while (i < j){
+            do i++; while (arr[i] < x);
+            do j--; while (arr[j] > x);
+            if( i < j) swap(arr,i,j);
         }
-        partitionMiddle(arr, l, j);
+        partitionMiddle(arr,l ,j);
         partitionMiddle(arr, j + 1, r);
 
     }

@@ -16,15 +16,11 @@ public class SelectSort {
     private static void selectSort(int[] arr) {
         //每次选择最小的元素，如当前轮数的索引位置的元素交换
         for (int i = 0; i < arr.length - 1; i++) {
-            //第0轮，循环结束则索引 0 是最小的
-            //第1轮，循环结束则索引 1 是最小的
-            //最后只需要选择索引为 arr.length - 2 的元素 会整体有序
             int minIndex = i;
-            for (int j = minIndex + 1; j < arr.length; j++) {  //最后一个元素也要比较
+            for (int j = minIndex + 1; j < arr.length; j++) {
                 minIndex = arr[j] < arr[minIndex] ? j : minIndex;
             }
-            swap(arr, minIndex, i);
-            System.out.println("第" + i + "轮选择！" + Arrays.toString(arr));
+            swap(arr,i,minIndex);
         }
 
 

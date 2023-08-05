@@ -2,7 +2,7 @@ package soutin;
 
 import java.util.*;
 
-class Solution {
+class Ssolution {
     public void myFunc(ArrayList<ArrayList<Integer>> arr) {
 
     }
@@ -32,7 +32,7 @@ public class Main
         arr.stream().flatMap(ArrayList::stream)
                 .forEach(value -> System.out.print(value + " "));
 
-        Solution slution = new Solution();
+        Ssolution slution = new Ssolution();
         slution.myFunc(arr);
 
     }
