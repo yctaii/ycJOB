@@ -1,4 +1,4 @@
-package soutin;
+package class2;
 
 /**
  * @projectName: ycJob
@@ -59,6 +59,33 @@ class SoluBitOperater {
         return res;
     }
 
+    public int div(int a, int  b){
+        //如果除法的两个数是负数，则转换成正数
+        int x = isNeg(a) ? negInt(a) : a;
+        int y = isNeg(b) ? negInt(b) : b;
+        int res = 0;
+        // x / y 为什么移31次因为 int是32位01，但最高位是负号为
+        for (int i = 30; i >= 0; i = minus(i,1)) {
+            //为什么用 x右移来判断 x还够不够减 而不是用 y左移
+            //因为y左移如果过多可能会把原来负号为改变，从而变为负数
+            if((x >> i) >= y){
+                res |= (1 << i);
+                x = minus(x, y << i);
+            }
+        }
+        // 由于除得时候都用绝对值，就要考虑正负
+        // 如果两个数有一个为负数，则添加负号  ^是异或，只有出现一个false 一个true 才会返回true
+        // 当 true ^ true时因为相同 所以异或下来结果时false
+        // 所以只有一正一负的情况下才会给结果加负号
+        return isNeg(a) ^ isNeg(b) ? negInt(res) : res;
+    }
+
+
+
+    public boolean isNeg(int a) {
+        return a < 0 ? true : false;
+    }
+
 }
 
 public class bitRealize {
@@ -69,6 +96,9 @@ public class bitRealize {
         System.out.println(sop.add(62, -3));
         System.out.println(sop.minus(62, -3));
         System.out.println(sop.multi(65, -3));
+        System.out.println(sop.div(63,-3));
+        System.out.println(sop.div(-63,-3));
+        System.out.println(sop.isNeg(-63) ^ sop.isNeg(-3));
     }
 
 
