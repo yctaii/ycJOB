@@ -42,44 +42,112 @@ class SoluBitOperater {
         return add(a, negInt(b));
     }
 
-    public int multi(int a, int b){
+//    public int multi(int a, int b){
+//        int res = 0;
+//        while(b != 0){
+//            if((b & 1) != 0){
+//                // 被乘数最低位为 1
+//                // 就加上乘数
+//                res = add(res,a);
+//            }
+//            //被乘数最低位为0 就啥也不干， 但是乘数得左移，被乘数的右移
+//            //乘完以后 为支持 乘数带符号向右移一位
+//            a <<= 1;
+//            // 被乘数已经被乘掉了一位 左移一位
+//            b >>>= 1;
+//        }
+//        return res;
+//    }
+
+
+
+//    public int div(int a, int  b){
+//        //如果除法的两个数是负数，则转换成正数
+//        int x = isNeg(a) ? negInt(a) : a;
+//        int y = isNeg(b) ? negInt(b) : b;
+//        int res = 0;
+//        // x / y 为什么移31次因为 int是32位01，但最高位是负号为
+//        for (int i = 30; i >= 0; i = minus(i,1)) {
+//            //为什么用 x右移来判断 x还够不够减 而不是用 y左移
+//            //因为y左移如果过多可能会把原来负号为改变，从而变为负数
+//            if((x >> i) >= y){
+//                res |= (1 << i);
+//                x = minus(x, y << i);
+//            }
+//        }
+//        // 由于除得时候都用绝对值，就要考虑正负
+//        // 如果两个数有一个为负数，则添加负号  ^是异或，只有出现一个false 一个true 才会返回true
+//        // 当 true ^ true时因为相同 所以异或下来结果时false
+//        // 所以只有一正一负的情况下才会给结果加负号
+//        return isNeg(a) ^ isNeg(b) ? negInt(res) : res;
+//    }
+//
+//    public int divide(int a, int b){
+//        if(b==Integer.MIN_VALUE && a==Integer.MIN_VALUE){
+//            return 1;
+//        }else if(b == Integer.MIN_VALUE){
+//            return 0;
+//        } else if (a == Integer.MIN_VALUE) {
+//            if(b == negInt(1)){
+//                return Integer.MAX_VALUE;
+//            }else {
+//                //a是系统最小值 比如 -128-127
+//                //此时a是-128  除法是先取反，用绝对值计算
+//                //但直接取反没有正128  所以要将 a+1
+//                //转化为 (a + 1) / b = c
+//                // a - (b * c) = d;
+//                // d /b = e;
+//                //return c + e;
+//                int ans = div(add(a,1),b);
+//                return add(ans,div(minus(a,multi(ans,b)),b));
+//
+//
+//            }
+//        } else{
+//            return div(a,b);
+//        }
+//    }
+
+    public int multi(int a, int b) {
         int res = 0;
-        while(b != 0){
-            if((b & 1) != 0){
-                // 被乘数最低位为 1
-                // 就加上乘数
-                res = add(res,a);
+        while (b != 0) {
+            if ((b & 1) != 0) {
+                res = add(res, a);
             }
-            //被乘数最低位为0 就啥也不干， 但是乘数得左移，被乘数的右移
-            //乘完以后 为支持 乘数带符号向右移一位
             a <<= 1;
-            // 被乘数已经被乘掉了一位 左移一位
             b >>>= 1;
         }
         return res;
     }
-
-    public int div(int a, int  b){
-        //如果除法的两个数是负数，则转换成正数
+    public int div(int a, int b) {
         int x = isNeg(a) ? negInt(a) : a;
         int y = isNeg(b) ? negInt(b) : b;
         int res = 0;
-        // x / y 为什么移31次因为 int是32位01，但最高位是负号为
-        for (int i = 30; i >= 0; i = minus(i,1)) {
-            //为什么用 x右移来判断 x还够不够减 而不是用 y左移
-            //因为y左移如果过多可能会把原来负号为改变，从而变为负数
-            if((x >> i) >= y){
+        for (int i = 30; i >= 0; i = minus(i, 1)) {
+            if ((x >> i) >= y) {
                 res |= (1 << i);
                 x = minus(x, y << i);
             }
         }
-        // 由于除得时候都用绝对值，就要考虑正负
-        // 如果两个数有一个为负数，则添加负号  ^是异或，只有出现一个false 一个true 才会返回true
-        // 当 true ^ true时因为相同 所以异或下来结果时false
-        // 所以只有一正一负的情况下才会给结果加负号
         return isNeg(a) ^ isNeg(b) ? negInt(res) : res;
     }
 
+    public int divide(int a, int b) {
+        if (a == Integer.MIN_VALUE && b == Integer.MIN_VALUE) {
+            return 1;
+        } else if (b == Integer.MIN_VALUE) {
+            return 0;
+        } else if (a == Integer.MIN_VALUE) {
+            if (b == negInt(1)) {
+                return Integer.MAX_VALUE;
+            } else {
+                int c = div(add(a, 1), b);
+                return add(c, div(minus(a, multi(c, b)), b));
+            }
+        } else {
+            return div(a, b);
+        }
+    }
 
 
     public boolean isNeg(int a) {
@@ -99,6 +167,8 @@ public class bitRealize {
         System.out.println(sop.div(63,-3));
         System.out.println(sop.div(-63,-3));
         System.out.println(sop.isNeg(-63) ^ sop.isNeg(-3));
+        System.out.println(sop.multi(715827882,-3));
+        System.out.println(sop.divide(-2147483648,-3));
     }
 
 
